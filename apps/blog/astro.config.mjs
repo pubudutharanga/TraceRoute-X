@@ -21,11 +21,11 @@ export default defineConfig({
   vite: {
     ssr: {
       noExternal: ["@traceroutex/ui"],
-      external: ["@prisma/client"],
+      external: ["@traceroutex/db"],
     },
     build: {
       rollupOptions: {
-        external: ["@prisma/client", ".prisma/client/default", ".prisma/client/index-browser"],
+        external: ["@traceroutex/db"],
       },
     },
   },
