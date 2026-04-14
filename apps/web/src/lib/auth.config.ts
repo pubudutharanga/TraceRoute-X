@@ -1,7 +1,7 @@
 import type { NextAuthConfig } from "next-auth"
 import type { Role } from "@traceroutex/db"
 
-export const authConfig = {
+export const authConfig: NextAuthConfig = {
   providers: [], // we will configure providers in auth.ts
   session: {
     strategy: "jwt",
@@ -38,4 +38,4 @@ export const authConfig = {
       return baseUrl
     },
   },
-} satisfies NextAuthConfig
+}
