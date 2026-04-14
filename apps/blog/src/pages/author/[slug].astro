@@ -11,14 +11,19 @@ export async function getStaticPaths() {
 
   const paths = await Promise.all(
     rawAuthors.map(async (rawAuthor) => {
-      const dbAuthor = await prisma.author.findFirst({
-        where: {
-          OR: [
-            { displayName: { equals: rawAuthor, mode: "insensitive" } },
-            { slug: { equals: rawAuthor.toLowerCase().replace(/\s+/g, "-"), mode: "insensitive" } }
-          ]
-        }
-      });
+      let dbAuthor = null;
+      try {
+        dbAuthor = await prisma.author.findFirst({
+          where: {
+            OR: [
+              { displayName: { equals: rawAuthor, mode: "insensitive" } },
+              { slug: { equals: rawAuthor.toLowerCase().replace(/\s+/g, "-"), mode: "insensitive" } }
+            ]
+          }
+        });
+      } catch (error) {
+        console.warn(`[Warning] Could not fetch author "${rawAuthor}" from DB. Ensure DATABASE_URL is set in Vercel Environment Variables. Using fallback data.`);
+      }
       
       const dynamicSlug = dbAuthor?.slug || rawAuthor.toLowerCase().replace(/\s+/g, "-");
       
