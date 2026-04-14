@@ -157,4 +157,7 @@ const nextAuth = NextAuth({
   },
 })
 
-export const { handlers, auth, signIn, signOut } = nextAuth
+export const { handlers, auth } = nextAuth
+// eslint-disable-next-line @typescript-eslint/no-explicit-any -- avoids TS declaration-emit portability error with @auth/core in pnpm monorepos
+export const signIn: any = nextAuth.signIn
+export const signOut: any = nextAuth.signOut
