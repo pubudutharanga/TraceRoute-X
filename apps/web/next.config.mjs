@@ -3,6 +3,9 @@ const nextConfig = {
   // Enable React strict mode for catching bugs early
   reactStrictMode: true,
 
+  // Fix Prisma Engine missing in Vercel Monorepos
+  serverExternalPackages: ["@prisma/client", "bcryptjs"],
+
   // Transpile workspace packages
   transpilePackages: ["@traceroutex/ui", "@traceroutex/db"],
 
