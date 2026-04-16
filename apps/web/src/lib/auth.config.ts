@@ -1,8 +1,41 @@
 import type { NextAuthConfig } from "next-auth"
 import type { Role } from "@traceroutex/db"
 
+const useSecureCookies = process.env.VERCEL_URL ? true : process.env.NODE_ENV === "production"
+const cookiePrefix = useSecureCookies ? "__Secure-" : ""
+const hostPrefix = useSecureCookies ? "__Host-" : ""
+
 export const authConfig: NextAuthConfig = {
   providers: [], // we will configure providers in auth.ts
+  useSecureCookies,
+  cookies: {
+    sessionToken: {
+      name: `${cookiePrefix}authjs.session-token`,
+      options: {
+        httpOnly: true,
+        sameSite: "none",
+        path: "/",
+        secure: true,
+      },
+    },
+    callbackUrl: {
+      name: `${cookiePrefix}authjs.callback-url`,
+      options: {
+        sameSite: "none",
+        path: "/",
+        secure: true,
+      },
+    },
+    csrfToken: {
+      name: `${hostPrefix}authjs.csrf-token`,
+      options: {
+        httpOnly: true,
+        sameSite: "none",
+        path: "/",
+        secure: true,
+      },
+    },
+  },
   session: {
     strategy: "jwt",
     maxAge: 30 * 24 * 60 * 60, // 30 days
