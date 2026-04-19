@@ -2,6 +2,7 @@ import { defineConfig } from "astro/config"
 import mdx from "@astrojs/mdx"
 import react from "@astrojs/react"
 import sitemap from "@astrojs/sitemap"
+import indexNowSubmitter from "./src/lib/indexNowAstro.ts"
 
 export default defineConfig({
   site: "https://traceroutex.vercel.app",
@@ -24,6 +25,7 @@ export default defineConfig({
       changefreq: "weekly",
       priority: 0.7,
     }),
+    indexNowSubmitter("dcaf3c5ee7764f1682bc927ce510e7f4", "https://traceroutex.vercel.app"),
   ],
 
   vite: {
