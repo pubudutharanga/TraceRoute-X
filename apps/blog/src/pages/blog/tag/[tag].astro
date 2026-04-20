@@ -24,8 +24,6 @@ const siteUrl = Astro.site?.toString().replace(/\/$/, '') || "https://traceroute
 const tagSlug = tag.toLowerCase().replace(/\s+/g, "-")
 const tagUrl = `${siteUrl}/blog/tag/${tagSlug}`
 
-// noindex tags with only 1 post to prevent thin content indexing
-const isThinTag = posts.length <= 1
 
 const collectionJsonLd = {
   "@context": "https://schema.org",
@@ -48,10 +46,10 @@ const breadcrumbJsonLd = {
 }
 ---
 
-<BaseLayout title={`#${tag} Articles`} description={`Browse all articles tagged with ${tag} on TraceRoute X — in-depth coverage for developers and tech enthusiasts.`} noIndex={isThinTag}>
+<BaseLayout title={`#${tag} Articles`} description={`Browse all articles tagged with ${tag} on TraceRoute X — in-depth coverage for developers and tech enthusiasts.`}>
   <Header />
 
-  {!isThinTag && <script type="application/ld+json" set:html={JSON.stringify(collectionJsonLd)} />}
+  <script type="application/ld+json" set:html={JSON.stringify(collectionJsonLd)} />
   <script type="application/ld+json" set:html={JSON.stringify(breadcrumbJsonLd)} />
 
   <main class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-10">
